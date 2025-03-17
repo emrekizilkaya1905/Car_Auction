@@ -52,7 +52,7 @@ namespace Car_Auction.Controllers;
 			return Ok(vehicles);
 		}
 		[HttpPut("UpdateVehicle")]
-		public async Task<IActionResult> UpdateVehicle([FromRoute] int vehicleId, UpdateVehicleDto model)
+		public async Task<IActionResult> UpdateVehicle( int vehicleId, [FromForm] UpdateVehicleDto model)
 		{
 			if (ModelState.IsValid)
 			{

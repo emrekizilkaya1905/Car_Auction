@@ -14,6 +14,7 @@ namespace Auction_Business.Mapper
 		public MappingProfile()
 		{
 			CreateMap<CreateVehicleDto, Vehicle>().ReverseMap();
+			CreateMap<UpdateVehicleDto, Vehicle>().ReverseMap();
 		}
 	}
 }
