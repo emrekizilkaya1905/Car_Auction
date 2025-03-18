@@ -122,7 +122,7 @@ namespace Auction_Business.Concrete
 				{
 					await _userManager.AddToRoleAsync(newUser, UserType.Seller.ToString());
 				}
-				if (userType == UserType.NormalUser.ToString().ToLower())
+				else if (userType == UserType.NormalUser.ToString().ToLower())
 				{
 					await _userManager.AddToRoleAsync(newUser, UserType.NormalUser.ToString());
 				}

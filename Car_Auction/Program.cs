@@ -1,5 +1,6 @@
 using Auction_Business.Abstraction;
 using Auction_Business.Concrete;
+using Car_Auction.Extensions;
 using Core.Model;
 using DataAccess.Context;
 using DataAccess.Models;
@@ -14,17 +15,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-	options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
-});
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-	.AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped(typeof(ApiResponse));
+builder.Services.AddApplicationLayer(builder.Configuration);
+builder.Services.AddPersistentLayer(builder.Configuration);
+builder.Services.AddSwaggerCollection(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +32,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
+app.UseStaticFiles();
 
 app.MapControllers();
 
