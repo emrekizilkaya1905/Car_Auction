@@ -26,9 +26,30 @@ namespace Auction_Business.Concrete
 			_response = response;
 		}
 
-		public Task<ApiResponse> AutomaticallyCreateBid(CreateBidDto model)
+		public async Task<ApiResponse> AutomaticallyCreateBid(CreateBidDto model)
 		{
-			throw new NotImplementedException();
+			var isPaid = await CheckIsPaidAuction(model.UserId, model.VehicleId);
+			if (!isPaid)
+			{
+				_response.isSuccess = false;
+				_response.ErrorMessages.Add("You must pay the auction price before proceeding with this action.");
+				return _response;
+			}
+			var result = await _context.Bids.Where(x => x.VehicleId == model.VehicleId && x.Vehicle.IsActive == true).
+				OrderByDescending(x => x.BidAmount).ToListAsync();
+			if(result.Count==0)
+			{
+				_response.isSuccess = false;
+				return _response;
+			}
+			var objDto = _mapper.Map<Bid>(model);
+			objDto.BidAmount = result[0].BidAmount + (result[0].BidAmount * 10) / 100;
+			objDto.BidDate = DateTime.Now;
+			_context.Bids.Add(objDto);
+			await _context.SaveChangesAsync();
+			_response.isSuccess = true;
+			_response.Result = result;
+			return _response;
 		}
 
 		public Task<ApiResponse> CancelBid(int bidId)
@@ -102,9 +123,17 @@ namespace Auction_Business.Concrete
 			return _response;
 		}
 
-		public Task<ApiResponse> GetBidByVehicleId(int vehicleId)
+		public async Task<ApiResponse> GetBidByVehicleId(int vehicleId)
 		{
-			throw new NotImplementedException();
+			var obj = await _context.Bids.Where(x => x.VehicleId == vehicleId).ToListAsync();
+			if(obj!=null)
+			{
+				_response.isSuccess = true;
+				_response.Result = obj;
+				return _response;
+			}
+			_response.isSuccess = false;
+			return _response;
 		}
 
 		public async Task<ApiResponse> UpdateBid(int bidId, UpdateBidDto model)
