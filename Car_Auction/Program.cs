@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(Auction_Business.Mapper.MappingProfile));
 builder.Services.AddApplicationLayer(builder.Configuration);
 builder.Services.AddPersistentLayer(builder.Configuration);
 builder.Services.AddSwaggerCollection(builder.Configuration);

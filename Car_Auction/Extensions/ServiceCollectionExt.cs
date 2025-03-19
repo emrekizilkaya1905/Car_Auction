@@ -1,5 +1,6 @@
 ﻿using Auction_Business.Abstraction;
 using Auction_Business.Concrete;
+using Core.MailHelper;
 using Core.Model;
 
 namespace Car_Auction.Extensions
@@ -12,6 +13,7 @@ namespace Car_Auction.Extensions
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<IVehicleService, VehicleService>();
 			services.AddScoped<IBidService, BidService>();
+			services.AddScoped<IMailService, MailService>();
 			services.AddScoped(typeof(ApiResponse));
 			return services;
 			#endregion

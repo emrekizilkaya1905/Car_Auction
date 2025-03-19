@@ -1,6 +1,7 @@
 ﻿using Auction_Business.Abstraction;
 using Auction_Business.Dtos;
 using AutoMapper;
+using Core.MailHelper;
 using Core.Model;
 using DataAccess.Context;
 using DataAccess.Domain;
@@ -18,12 +19,14 @@ namespace Auction_Business.Concrete
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
 		private readonly ApiResponse _response;
+		private readonly IMailService _mailService;
 
-		public BidService(ApplicationDbContext context, IMapper mapper, ApiResponse response)
+		public BidService(ApplicationDbContext context, IMapper mapper, ApiResponse response, IMailService mailService)
 		{
 			_context = context;
 			_mapper = mapper;
 			_response = response;
+			_mailService = mailService;
 		}
 
 		public async Task<ApiResponse> AutomaticallyCreateBid(CreateBidDto model)
@@ -62,12 +65,12 @@ namespace Auction_Business.Concrete
 			var returnValue = await CheckIsActive(model.VehicleId);
 			var isPaid = await CheckIsPaidAuction(model.UserId, model.VehicleId);
 		
-			if(!isPaid)
-			{
-				_response.isSuccess = false;
-				_response.ErrorMessages.Add("You must pay the auction price before proceeding with this action.");
-				return _response;
-			}
+			//if(!isPaid)
+			//{
+			//	_response.isSuccess = false;
+			//	_response.ErrorMessages.Add("You must pay the auction price before proceeding with this action.");
+			//	return _response;
+			//}
 			if(returnValue==null)
 			{
 				_response.isSuccess = false;
@@ -86,7 +89,7 @@ namespace Auction_Business.Concrete
 				OrderByDescending(x => x.BidAmount).ToListAsync();
 				if(topPrice.Count!=0)
 				{
-					if (topPrice[0].BidAmount == model.BidAmount)
+					if (topPrice[0].BidAmount <= model.BidAmount)
 					{
 						_response.isSuccess = false;
 						_response.ErrorMessages.
@@ -99,6 +102,8 @@ namespace Auction_Business.Concrete
 				await _context.Bids.AddAsync(bid);
 				if(await _context.SaveChangesAsync()>0)
 				{
+					var userDetail = await _context.Bids.Include(x => x.User).Where(x => x.UserId == model.UserId).FirstOrDefaultAsync();
+					_mailService.SendEmail("Your bid is success", "Your bid is :" + bid.BidAmount, bid.User.UserName);
 					_response.isSuccess = true;
 					_response.Result = model;
 					return _response;
