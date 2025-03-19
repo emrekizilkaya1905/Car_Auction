@@ -88,9 +88,18 @@ namespace Auction_Business.Concrete
 			return _response;
 		}
 
-		public Task<ApiResponse> GetBidById(int bidId)
+		public async Task<ApiResponse> GetBidById(int bidId)
 		{
-			throw new NotImplementedException();
+			var result = await _context.Bids.Include(x=>x.User).Where(x => x.BidId == bidId).FirstOrDefaultAsync();
+			if(result == null)
+			{
+				_response.isSuccess = false;
+				_response.ErrorMessages.Add("Bid is not found");
+				return _response;
+			}
+			_response.isSuccess = true;
+			_response.Result = result;
+			return _response;
 		}
 
 		public Task<ApiResponse> GetBidByVehicleId(int vehicleId)
@@ -98,9 +107,42 @@ namespace Auction_Business.Concrete
 			throw new NotImplementedException();
 		}
 
-		public Task<ApiResponse> UpdateBid(int bidId, UpdateBidDto model)
+		public async Task<ApiResponse> UpdateBid(int bidId, UpdateBidDto model)
 		{
-			throw new NotImplementedException();
+			//Update eden kullanici en son verdigi teklifin uzerine cikmalidir.
+			var isPaid = await CheckIsPaidAuction(model.UserId, model.VehicleId);
+			if(!isPaid)
+			{
+				_response.isSuccess = false;
+				_response.ErrorMessages.Add("You must pay the auction price before proceeding with this action.");
+				return _response;
+			}
+			var result = await _context.Bids.FindAsync(bidId);
+			if(result==null)
+			{
+				_response.isSuccess = false;
+				_response.ErrorMessages.Add("Bid is not found");
+				return _response;
+			}
+			if(result.BidAmount<model.BidAmount && result.UserId == model.UserId)
+			{
+				var objDto = _mapper.Map(model, result);
+				objDto.BidDate = DateTime.Now;
+				_response.isSuccess = true;
+				_response.Result = objDto;
+				await _context.SaveChangesAsync();
+				return _response;
+			}
+			else if(result.BidAmount >= model.BidAmount)
+			{
+				_response.isSuccess = false;
+				_response.ErrorMessages.Add("Your new bid must be higher than your previous bid. Your previous bid amount is " + result.BidAmount);
+				return _response;
+			}
+			_response.isSuccess = false;
+			_response.ErrorMessages.Add("An unexpected error occurred while updating the bid.");
+			return _response;
+
 		}
 		private async Task<Vehicle>CheckIsActive(int vehicleId)
 		{
