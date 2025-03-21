@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(typeof(Auction_Business.Mapper.MappingProfile));
 builder.Services.AddApplicationLayer(builder.Configuration);
 builder.Services.AddPersistentLayer(builder.Configuration);
 builder.Services.AddSwaggerCollection(builder.Configuration);
+builder.Services.AddInfrastruceLayer(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

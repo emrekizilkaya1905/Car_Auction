@@ -1,9 +1,11 @@
 ﻿using Auction_Business.Dtos;
+using Core.Common;
 using Core.Model;
 using DataAccess.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Stripe;
 using System.Configuration;
 
@@ -16,17 +18,19 @@ namespace Car_Auction.Controllers
         private readonly ApiResponse _response;
         private readonly IConfiguration _configuration;
 		private readonly ApplicationDbContext _context;
+		private readonly StripeSettings _stripeSettings;
 
-		public PaymentController(ApiResponse response, IConfiguration configuration, ApplicationDbContext context)
+		public PaymentController(ApiResponse response, IOptions<StripeSettings> options, IConfiguration configuration, ApplicationDbContext context)
 		{
 			_response = response;
 			_configuration = configuration;
 			_context = context;
+			_stripeSettings = options.Value;
 		}
 		[HttpPost("Pay")]
 		public async Task<ActionResult<ApiResponse>> MakePayment(string userId, int vehicleId)
 		{
-			StripeConfiguration.ApiKey = _configuration.GetValue<string>("StripeSettings:SecretKey");
+			StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 			var amountToBePaid = await _context.Vehicles.FirstOrDefaultAsync(x => x.VehicleId == vehicleId);
 			var options = new PaymentIntentCreateOptions
 			{
