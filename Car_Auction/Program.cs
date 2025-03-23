@@ -21,6 +21,7 @@ builder.Services.AddApplicationLayer(builder.Configuration);
 builder.Services.AddPersistentLayer(builder.Configuration);
 builder.Services.AddSwaggerCollection(builder.Configuration);
 builder.Services.AddInfrastruceLayer(builder.Configuration);
+builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,7 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors(x=>x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin=>true).AllowCredentials());
 app.UseAuthorization();
 app.UseAuthentication();
 app.UseStaticFiles();
