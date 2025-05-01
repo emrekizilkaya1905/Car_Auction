@@ -31,7 +31,7 @@ namespace Car_Auction.Extensions
 
 				services.AddSwaggerGen(options =>
 				{
-					options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+					options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
 					{
 						Description =
 							"JWT Authorization header using the Bearer scheme. \r\n\r\n " +
