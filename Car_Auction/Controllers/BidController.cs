@@ -41,7 +41,7 @@ namespace Car_Auction.Controllers
 			
 		}
 		[HttpPut("{bidId:int}")]
-		public async Task<IActionResult> UpdateBid(int bidId, UpdateBidDto model)
+		public async Task<IActionResult> ModifyBid(int bidId, UpdateBidDto model)
 		{
 			if (ModelState.IsValid)
 			{

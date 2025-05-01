@@ -21,7 +21,7 @@ namespace Car_Auction.Controllers
 			if(ModelState.IsValid)
 			{
 				var response = await _paymentHistoryService.CreatePaymentHistory(model);
-				if(response.isSuccess=false)
+				if(!response.isSuccess)
 				{
 					return BadRequest(response);
 				}

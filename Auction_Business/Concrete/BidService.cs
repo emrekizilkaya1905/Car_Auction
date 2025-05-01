@@ -64,14 +64,14 @@ namespace Auction_Business.Concrete
 		{
 			var returnValue = await CheckIsActive(model.VehicleId);
 			var isPaid = await CheckIsPaidAuction(model.UserId, model.VehicleId);
-		
-			//if(!isPaid)
-			//{
-			//	_response.isSuccess = false;
-			//	_response.ErrorMessages.Add("You must pay the auction price before proceeding with this action.");
-			//	return _response;
-			//}
-			if(returnValue==null)
+
+			if (!isPaid)
+			{
+				_response.isSuccess = false;
+				_response.ErrorMessages.Add("You must pay the auction price before proceeding with this action.");
+				return _response;
+			}
+			if (returnValue==null)
 			{
 				_response.isSuccess = false;
 				_response.ErrorMessages.Add("This car is not active");
@@ -89,7 +89,7 @@ namespace Auction_Business.Concrete
 				OrderByDescending(x => x.BidAmount).ToListAsync();
 				if(topPrice.Count!=0)
 				{
-					if (topPrice[0].BidAmount <= model.BidAmount)
+					if (topPrice[0].BidAmount >= model.BidAmount)
 					{
 						_response.isSuccess = false;
 						_response.ErrorMessages.
