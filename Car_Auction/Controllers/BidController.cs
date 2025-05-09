@@ -68,11 +68,11 @@ namespace Car_Auction.Controllers
 			}
 			return BadRequest();
 		}
-		[HttpGet("GetBidsByVehicle/{bidId:int}")]
-		public async Task<IActionResult> GetBidByVehicle(int bidId)
+		[HttpGet("GetBidsByVehicle/{vehicleId:int}")]
+		public async Task<IActionResult> GetBidByVehicle(int vehicleId)
 		{
 
-			var response = await _bidService.GetBidByVehicleId(bidId);
+			var response = await _bidService.GetBidByVehicleId(vehicleId);
 			if (!response.isSuccess)
 			{
 				return BadRequest(response);

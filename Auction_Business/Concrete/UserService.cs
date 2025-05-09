@@ -61,8 +61,8 @@ namespace Auction_Business.Concrete
 					{
 						new Claim(ClaimTypes.NameIdentifier,userFromDb.Id),
 						new Claim(ClaimTypes.Email,userFromDb.Email!),
-						new Claim(ClaimTypes.Role,role.FirstOrDefault()!),
-						new Claim("fullname",userFromDb.FullName!)
+						 new Claim(ClaimTypes.Role, role.FirstOrDefault() == null ? "NormalUser" : role.FirstOrDefault()),
+						new Claim("fullName",userFromDb.FullName!)
 
 					}),
 					Expires = DateTime.UtcNow.AddDays(1),

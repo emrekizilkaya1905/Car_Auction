@@ -13,7 +13,7 @@ namespace Car_Auction.Extensions
 			#region Context
 			services.AddDbContext<ApplicationDbContext>(options =>
 			{
-				options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
+				options.UseMySQL(configuration.GetConnectionString("MySqlServer"));
 			});
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>();

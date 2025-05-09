@@ -40,7 +40,7 @@ namespace DataAccess.Context
 					EndTime = DateTime.Now.AddDays(48),
 					IsActive = true,
 					Image = "https://i.gaw.to/content/photos/39/21/392165_2020_Toyota_Camry.jpg",
-					SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+					SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 				},
 					new Vehicle
 					{
@@ -59,7 +59,7 @@ namespace DataAccess.Context
 						EndTime = DateTime.Now.AddDays(24),
 						IsActive = false,
 						Image = "https://i.pinimg.com/originals/4f/b7/96/4fb796d99758f4889338c69efc74dbfe.jpg",
-						SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+						SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 					},
 					new Vehicle
 					{
@@ -78,7 +78,7 @@ namespace DataAccess.Context
 						EndTime = DateTime.Now.AddDays(72),
 						IsActive = true,
 						Image = "https://www.autopartmax.com/images/cUpload/FORD%20Truck-F150%20Raptor.jpg",
-						SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+						SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 					},
 					new Vehicle
@@ -98,7 +98,7 @@ namespace DataAccess.Context
 						EndTime = DateTime.Now.AddDays(48),
 						IsActive = true,
 						Image = "https://www.jonathanmotorcars.com/imagetag/631/3/l/Used-2017-Nissan-Altima-25-SV-Premium.jpg",
-						SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+						SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 					},
 					new Vehicle
@@ -118,7 +118,7 @@ namespace DataAccess.Context
 						EndTime = DateTime.Now.AddDays(72),
 						IsActive = true,
 						Image = "https://cdn.carbuzz.com/gallery-images/2016-chevrolet-malibu-carbuzz-489817-1600.jpg",
-						SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+						SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 					},
 					new Vehicle
@@ -138,7 +138,7 @@ namespace DataAccess.Context
 						EndTime = DateTime.Now.AddDays(48),
 						IsActive = true,
 						Image = "https://i.pinimg.com/originals/93/2e/fb/932efb625cc97155497cfabd53a57d71.jpg",
-						SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+						SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 					},
 						new Vehicle
@@ -158,7 +158,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://w.forfun.com/fetch/03/033f1bda44fe68f0aaa4db19f84a2e54.jpeg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -177,7 +177,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://avatars.mds.yandex.net/get-autoru-vos/6209275/1ee5dfabd4030a68195d9ac37ebf08b2/1200x900",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -196,7 +196,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://images.hgmsites.net/hug/2018-aston-martin-db11_100630564_h.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -215,7 +215,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://www.mclarencf.com/imagetag/42/main/l/New-2020-McLaren-720S-Spider.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -234,7 +234,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://coolwallpapers.me/picsup/5650604-bugatti-chiron-wallpapers.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -253,7 +253,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://wallpapercave.com/wp/wp5031567.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -272,7 +272,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://4kwallpapers.com/images/wallpapers/novitec-ferrari-sf90-stradale-2022-5k-8k-2880x1800-8481.jpeg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -291,7 +291,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://www.motorionline.com/wp-content/gallery/pagani-huayra-nc/Pagani-Huayra-NC-1.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -310,7 +310,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://wallpapercave.com/wp/wp6603188.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -329,7 +329,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://i.pinimg.com/originals/8f/b4/3b/8fb43b750028af047cbb0308c0e46014.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -348,7 +348,8 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://wallpapercave.com/wp/wp8343229.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
+
 
 						},
 						new Vehicle
@@ -367,7 +368,8 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://images.hdqwalls.com/download/mercedes-benz-sls-amg-yellow-5k-hv-3840x2400.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
+
 
 						},
 						new Vehicle
@@ -386,7 +388,8 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://i.pinimg.com/originals/e9/75/81/e97581a73660b583b1d982ef23607c24.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
+
 
 						},
 						new Vehicle
@@ -406,7 +409,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(72),
 							IsActive = true,
 							Image = "https://www.mustangspecs.com/wp-content/uploads/2022/09/carpixel.net-2022-shelby-gt500-mustang-heritage-edition-106565-hd.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 
 						},
 						new Vehicle
@@ -425,7 +428,7 @@ namespace DataAccess.Context
 							EndTime = DateTime.Now.AddDays(48),
 							IsActive = true,
 							Image = "https://media.porsche.com/mediakit/718-cayman-gt4-rs/00-photos/media-drive/718-Cayman-GT4-RS-GT-silbermetallic-S-GO1306/image-thumb__47840__mk2-modal-item/porschecayman_estoril07005_high_1.jpg",
-							SellerId = "a0f7d450-2823-4757-bd02-248ca71de618"
+							SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674"
 						});
 		}
 

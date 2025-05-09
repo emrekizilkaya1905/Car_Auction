@@ -3,7 +3,6 @@ using System;
 using DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250318033143_seed")]
-    partial class seed
+    [Migration("20250504002203_newCar")]
+    partial class newCar
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +20,7 @@ namespace DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("DataAccess.Domain.Bid", b =>
                 {
@@ -31,21 +28,19 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BidId"));
-
                     b.Property<decimal>("BidAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("BidDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("BidStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
@@ -65,17 +60,23 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
+                    b.Property<string>("ClientSecret")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("PayDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("StripePaymentId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
@@ -95,35 +96,33 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleId"));
-
                     b.Property<string>("AdditionalInformation")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<double>("AuctionPrice")
-                        .HasColumnType("float");
+                        .HasColumnType("double");
 
                     b.Property<string>("BrandAndModel")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Color")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<decimal>("EngineCapacity")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("ManufacturingYear")
                         .HasColumnType("int");
@@ -133,17 +132,17 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("PlateNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("SellerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("VehicleId");
 
@@ -159,7 +158,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Toyota Camry",
                             Color = "Silver",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4275),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3023),
                             EngineCapacity = 2.5m,
                             Image = "https://i.gaw.to/content/photos/39/21/392165_2020_Toyota_Camry.jpg",
                             IsActive = true,
@@ -167,8 +166,8 @@ namespace DataAccess.Migrations
                             Millage = 15000,
                             PlateNumber = "34AA21",
                             Price = 25000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4221)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(2971)
                         },
                         new
                         {
@@ -177,7 +176,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Honda Civic",
                             Color = "Blue",
-                            EndTime = new DateTime(2025, 4, 11, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4283),
+                            EndTime = new DateTime(2025, 5, 28, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3032),
                             EngineCapacity = 1.8m,
                             Image = "https://i.pinimg.com/originals/4f/b7/96/4fb796d99758f4889338c69efc74dbfe.jpg",
                             IsActive = false,
@@ -185,8 +184,8 @@ namespace DataAccess.Migrations
                             Millage = 20000,
                             PlateNumber = "34AA21",
                             Price = 18000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4281)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3030)
                         },
                         new
                         {
@@ -195,7 +194,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Ford F-150",
                             Color = "Red",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4337),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3036),
                             EngineCapacity = 5.0m,
                             Image = "https://www.autopartmax.com/images/cUpload/FORD%20Truck-F150%20Raptor.jpg",
                             IsActive = true,
@@ -203,8 +202,8 @@ namespace DataAccess.Migrations
                             Millage = 25000,
                             PlateNumber = "34AA21",
                             Price = 28000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4336)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3035)
                         },
                         new
                         {
@@ -213,7 +212,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Nissan Altima",
                             Color = "Black",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4341),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3041),
                             EngineCapacity = 2.5m,
                             Image = "https://www.jonathanmotorcars.com/imagetag/631/3/l/Used-2017-Nissan-Altima-25-SV-Premium.jpg",
                             IsActive = true,
@@ -221,8 +220,8 @@ namespace DataAccess.Migrations
                             Millage = 30000,
                             PlateNumber = "34AA21",
                             Price = 16000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4340)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3039)
                         },
                         new
                         {
@@ -231,7 +230,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Chevrolet Malibu",
                             Color = "Silver",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4345),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3045),
                             EngineCapacity = 2.4m,
                             Image = "https://cdn.carbuzz.com/gallery-images/2016-chevrolet-malibu-carbuzz-489817-1600.jpg",
                             IsActive = true,
@@ -239,8 +238,8 @@ namespace DataAccess.Migrations
                             Millage = 28000,
                             PlateNumber = "34AA21",
                             Price = 15500.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4344)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3044)
                         },
                         new
                         {
@@ -249,7 +248,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Ferrari 488 GTB",
                             Color = "Red",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4350),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3049),
                             EngineCapacity = 3.9m,
                             Image = "https://i.pinimg.com/originals/93/2e/fb/932efb625cc97155497cfabd53a57d71.jpg",
                             IsActive = true,
@@ -257,8 +256,8 @@ namespace DataAccess.Migrations
                             Millage = 1000,
                             PlateNumber = "34AA21",
                             Price = 300000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4349)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3048)
                         },
                         new
                         {
@@ -267,7 +266,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Lamborghini Huracan",
                             Color = "Yellow",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4354),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3053),
                             EngineCapacity = 5.2m,
                             Image = "https://w.forfun.com/fetch/03/033f1bda44fe68f0aaa4db19f84a2e54.jpeg",
                             IsActive = true,
@@ -275,8 +274,8 @@ namespace DataAccess.Migrations
                             Millage = 2000,
                             PlateNumber = "34AA21",
                             Price = 280000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4353)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3051)
                         },
                         new
                         {
@@ -285,7 +284,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Porsche 911",
                             Color = "White",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4358),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3057),
                             EngineCapacity = 3.0m,
                             Image = "https://avatars.mds.yandex.net/get-autoru-vos/6209275/1ee5dfabd4030a68195d9ac37ebf08b2/1200x900",
                             IsActive = true,
@@ -293,8 +292,8 @@ namespace DataAccess.Migrations
                             Millage = 5000,
                             PlateNumber = "34AA21",
                             Price = 180000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4357)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3056)
                         },
                         new
                         {
@@ -303,7 +302,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Aston Martin DB11",
                             Color = "Black",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4362),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3062),
                             EngineCapacity = 5.2m,
                             Image = "https://images.hgmsites.net/hug/2018-aston-martin-db11_100630564_h.jpg",
                             IsActive = true,
@@ -311,8 +310,8 @@ namespace DataAccess.Migrations
                             Millage = 6000,
                             PlateNumber = "34AA21",
                             Price = 250000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4361)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3061)
                         },
                         new
                         {
@@ -321,7 +320,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "McLaren 720S",
                             Color = "Orange",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4366),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3066),
                             EngineCapacity = 4.0m,
                             Image = "https://www.mclarencf.com/imagetag/42/main/l/New-2020-McLaren-720S-Spider.jpg",
                             IsActive = true,
@@ -329,8 +328,8 @@ namespace DataAccess.Migrations
                             Millage = 4000,
                             PlateNumber = "34AA21",
                             Price = 280000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4365)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3065)
                         },
                         new
                         {
@@ -339,7 +338,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Bugatti Chiron",
                             Color = "Blue",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4370),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3072),
                             EngineCapacity = 8.0m,
                             Image = "https://coolwallpapers.me/picsup/5650604-bugatti-chiron-wallpapers.jpg",
                             IsActive = true,
@@ -347,8 +346,8 @@ namespace DataAccess.Migrations
                             Millage = 3000,
                             PlateNumber = "34AA21",
                             Price = 350000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4369)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3071)
                         },
                         new
                         {
@@ -357,7 +356,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Koenigsegg Jesko",
                             Color = "Silver",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4373),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3076),
                             EngineCapacity = 5.0m,
                             Image = "https://wallpapercave.com/wp/wp5031567.jpg",
                             IsActive = true,
@@ -365,8 +364,8 @@ namespace DataAccess.Migrations
                             Millage = 1500,
                             PlateNumber = "34AA21",
                             Price = 400000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4372)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3075)
                         },
                         new
                         {
@@ -375,7 +374,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Ferrari SF90 Stradale",
                             Color = "Red",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4377),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3080),
                             EngineCapacity = 4.0m,
                             Image = "https://4kwallpapers.com/images/wallpapers/novitec-ferrari-sf90-stradale-2022-5k-8k-2880x1800-8481.jpeg",
                             IsActive = true,
@@ -383,8 +382,8 @@ namespace DataAccess.Migrations
                             Millage = 2000,
                             PlateNumber = "34AA21",
                             Price = 275000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4376)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3079)
                         },
                         new
                         {
@@ -393,7 +392,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Pagani Huayra",
                             Color = "Green",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4382),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3084),
                             EngineCapacity = 6.0m,
                             Image = "https://www.motorionline.com/wp-content/gallery/pagani-huayra-nc/Pagani-Huayra-NC-1.jpg",
                             IsActive = true,
@@ -401,8 +400,8 @@ namespace DataAccess.Migrations
                             Millage = 2500,
                             PlateNumber = "34AA21",
                             Price = 320000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4381)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3083)
                         },
                         new
                         {
@@ -411,7 +410,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Lexus LC 500",
                             Color = "Black",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4386),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3089),
                             EngineCapacity = 5.0m,
                             Image = "https://wallpapercave.com/wp/wp6603188.jpg",
                             IsActive = true,
@@ -419,8 +418,8 @@ namespace DataAccess.Migrations
                             Millage = 5000,
                             PlateNumber = "34AA21",
                             Price = 60000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4385)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3087)
                         },
                         new
                         {
@@ -429,7 +428,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Tesla Model S",
                             Color = "Blue",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4390),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3145),
                             EngineCapacity = 0.0m,
                             Image = "https://i.pinimg.com/originals/8f/b4/3b/8fb43b750028af047cbb0308c0e46014.jpg",
                             IsActive = true,
@@ -437,8 +436,8 @@ namespace DataAccess.Migrations
                             Millage = 1500,
                             PlateNumber = "34AA21",
                             Price = 90000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4389)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3144)
                         },
                         new
                         {
@@ -447,7 +446,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Audi R8",
                             Color = "Silver",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4394),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3150),
                             EngineCapacity = 5.2m,
                             Image = "https://wallpapercave.com/wp/wp8343229.jpg",
                             IsActive = true,
@@ -455,8 +454,8 @@ namespace DataAccess.Migrations
                             Millage = 3000,
                             PlateNumber = "34AA21",
                             Price = 120000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4393)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3148)
                         },
                         new
                         {
@@ -465,7 +464,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Mercedes-AMG GT",
                             Color = "Black",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4398),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3154),
                             EngineCapacity = 4.0m,
                             Image = "https://images.hdqwalls.com/download/mercedes-benz-sls-amg-yellow-5k-hv-3840x2400.jpg",
                             IsActive = true,
@@ -473,8 +472,8 @@ namespace DataAccess.Migrations
                             Millage = 4000,
                             PlateNumber = "34AA21",
                             Price = 110000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4397)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3152)
                         },
                         new
                         {
@@ -483,7 +482,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Nissan GT-R",
                             Color = "Blue",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4402),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3158),
                             EngineCapacity = 3.8m,
                             Image = "https://i.pinimg.com/originals/e9/75/81/e97581a73660b583b1d982ef23607c24.jpg",
                             IsActive = true,
@@ -491,8 +490,8 @@ namespace DataAccess.Migrations
                             Millage = 2500,
                             PlateNumber = "34AA21",
                             Price = 95000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4401)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3157)
                         },
                         new
                         {
@@ -501,7 +500,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Ford Mustang Shelby GT500",
                             Color = "Red",
-                            EndTime = new DateTime(2025, 5, 29, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4407),
+                            EndTime = new DateTime(2025, 7, 15, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3162),
                             EngineCapacity = 5.2m,
                             Image = "https://www.mustangspecs.com/wp-content/uploads/2022/09/carpixel.net-2022-shelby-gt500-mustang-heritage-edition-106565-hd.jpg",
                             IsActive = true,
@@ -509,8 +508,8 @@ namespace DataAccess.Migrations
                             Millage = 1500,
                             PlateNumber = "34AA21",
                             Price = 75000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4406)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3161)
                         },
                         new
                         {
@@ -519,7 +518,7 @@ namespace DataAccess.Migrations
                             AuctionPrice = 0.0,
                             BrandAndModel = "Porsche Cayman GT4",
                             Color = "Yellow",
-                            EndTime = new DateTime(2025, 5, 5, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4411),
+                            EndTime = new DateTime(2025, 6, 21, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3166),
                             EngineCapacity = 4.0m,
                             Image = "https://media.porsche.com/mediakit/718-cayman-gt4-rs/00-photos/media-drive/718-Cayman-GT4-RS-GT-silbermetallic-S-GO1306/image-thumb__47840__mk2-modal-item/porschecayman_estoril07005_high_1.jpg",
                             IsActive = true,
@@ -527,71 +526,71 @@ namespace DataAccess.Migrations
                             Millage = 3500,
                             PlateNumber = "34AA21",
                             Price = 95000.00m,
-                            SellerId = "a0f7d450-2823-4757-bd02-248ca71de618",
-                            StartTime = new DateTime(2025, 3, 18, 4, 31, 43, 91, DateTimeKind.Local).AddTicks(4409)
+                            SellerId = "ba9bc95c-4c31-46e0-9055-86c577134674",
+                            StartTime = new DateTime(2025, 5, 4, 2, 22, 2, 280, DateTimeKind.Local).AddTicks(3165)
                         });
                 });
 
             modelBuilder.Entity("DataAccess.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
@@ -600,8 +599,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -609,26 +607,25 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -639,17 +636,15 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -664,17 +659,15 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
@@ -686,17 +679,17 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -708,10 +701,10 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -723,16 +716,16 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 

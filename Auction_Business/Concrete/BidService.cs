@@ -80,7 +80,7 @@ namespace Auction_Business.Concrete
 			if (returnValue!.Price >= model.BidAmount)
 			{
 				_response.isSuccess = false;
-				_response.ErrorMessages.Add("You should surpass the highest bid in the placed bids.");
+				_response.ErrorMessages.Add($"You should surpass the default price for this car {returnValue.Price}");
 				return _response;
 			}
 			if(model != null)
@@ -89,11 +89,10 @@ namespace Auction_Business.Concrete
 				OrderByDescending(x => x.BidAmount).ToListAsync();
 				if(topPrice.Count!=0)
 				{
-					if (topPrice[0].BidAmount >= model.BidAmount)
+					if (topPrice[0].BidAmount >= model.BidAmount && model.BidAmount < topPrice[0].BidAmount + (topPrice[0].BidAmount * 1) / 100)
 					{
 						_response.isSuccess = false;
-						_response.ErrorMessages.
-						Add("Entry bid amount must not lower than the higher price in the system, higher price is" + topPrice[0].BidAmount);
+						_response.ErrorMessages.Add("Entry bid amount,not lower than higher price to the system; higher price is : " + topPrice[0].BidAmount + (topPrice[0].BidAmount * 1) / 100);
 						return _response;
 					}
 				}
@@ -130,8 +129,8 @@ namespace Auction_Business.Concrete
 
 		public async Task<ApiResponse> GetBidByVehicleId(int vehicleId)
 		{
-			var obj = await _context.Bids.Where(x => x.VehicleId == vehicleId).ToListAsync();
-			if(obj!=null)
+			var obj = await _context.Bids.Include(x => x.Vehicle).ThenInclude(x => x.Bids).Where(x => x.VehicleId == vehicleId).ToListAsync();
+			if (obj!=null)
 			{
 				_response.isSuccess = true;
 				_response.Result = obj;

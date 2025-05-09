@@ -51,6 +51,7 @@ namespace Auction_Business.Concrete
 			var objDto=_mapper.Map<PaymentHistory>(model);
 			objDto.PayDate = DateTime.Now;
 			objDto.IsActive = true;
+			 _context.PaymentHistories.Add(objDto);
 			if (await _context.SaveChangesAsync() > 0) 
 			{
 				_response.isSuccess = true;

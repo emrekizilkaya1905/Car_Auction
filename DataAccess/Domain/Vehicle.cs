@@ -29,6 +29,7 @@ namespace DataAccess.Domain
 		public string SellerId { get; set; }
 		[JsonIgnore]
 		public ApplicationUser Seller { get; set; }
+		
 		public virtual List<Bid> Bids { get; set; }
 	}
 }

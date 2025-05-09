@@ -1,6 +1,7 @@
 using Auction_Business.Abstraction;
 using Auction_Business.Concrete;
 using Car_Auction.Extensions;
+using Car_Auction.Hubs;
 using Core.Model;
 using DataAccess.Context;
 using DataAccess.Models;
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 builder.Services.AddAutoMapper(typeof(Auction_Business.Mapper.MappingProfile));
 builder.Services.AddApplicationLayer(builder.Configuration);
@@ -35,6 +37,7 @@ app.UseHttpsRedirection();
 app.UseCors(x=>x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin=>true).AllowCredentials());
 app.UseAuthorization();
 app.UseAuthentication();
+app.MapHub<BidUpdateHub>("/BidUpdate/Hub");
 app.UseStaticFiles();
 
 app.MapControllers();
